@@ -1,4 +1,5 @@
-// import KULLANMA
+// main.js — CDN ile (importsuz) MindARThree kullanımı
+
 const status = (msg) => {
   let el = document.getElementById('status');
   if (!el) {
@@ -22,7 +23,8 @@ async function run () {
 
     status('Loading targets: ./assets/targets.mind');
 
-    // CDN ile global isim:
+    // ÖNEMLİ: mindar-image-three.prod.js yüklüyken global değişken buradadır:
+    // window.MINDAR.IMAGE.MindARThree
     const mindar = new window.MINDAR.IMAGE.MindARThree({
       container: document.body,
       imageTargetSrc: './assets/targets.mind'
@@ -30,9 +32,11 @@ async function run () {
 
     const { renderer, scene, camera } = mindar;
 
+    // Basit ışık
     const hemi = new THREE.HemisphereLight(0xffffff, 0x222222, 1);
     scene.add(hemi);
 
+    // Bir anchor ve basit bir küp
     const anchor = mindar.addAnchor(0);
     const cube = new THREE.Mesh(
       new THREE.BoxGeometry(0.2, 0.2, 0.2),
@@ -54,4 +58,5 @@ async function run () {
     status('ERROR: ' + (e?.message || e));
   }
 }
+
 run();
